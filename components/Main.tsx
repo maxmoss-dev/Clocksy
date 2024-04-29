@@ -30,14 +30,14 @@ const Main = () => {
         setTimerTime(newTimerTime);
 
         if ((!moveUp && newTimerTime < timePoint) || moveUp) {
-          const changeIndex = 2000;
+          const changeIndex = 3000;
           
           // clock opacity
-          const newClockOpacity = Math.min(Math.max(clockOpacity._value + dy / 1000, 0.6), 1);
+          const newClockOpacity = Math.min(Math.max(clockOpacity._value + dy / changeIndex, 0.6), 1);
           clockOpacity.setValue(newClockOpacity);
 
           // clock scale
-          const clockMin = 0.25;
+          const clockMin = 0.2;
           const clockChange = 1 - clockMin;
           const clockIndex = changeIndex / clockChange;
           const newClockScale = Math.min(Math.max(clockScale._value + dy / clockIndex, clockMin), 1.05);
@@ -63,7 +63,7 @@ const Main = () => {
 
         if (timerTimeRef.current > timePoint) {
           Animated.spring(clockScale, {
-            toValue: 0.25,
+            toValue: 0.2,
             useNativeDriver: false,
           }).start();
           Animated.spring(clockOpacity, {

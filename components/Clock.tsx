@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, useWindowDimensions } from 'react-native';
 import ProgressBar from './ProgressBar';
 
 const Clock = () => {
   const [time, setTime] = useState<{ hours: string, minutes: string, seconds: number }>
                             ({ hours: '', minutes: '', seconds: 60 });
+  const { width, height } = useWindowDimensions();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -18,11 +19,13 @@ const Clock = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const fontSize = height > width ? 80 : 180;
+
   return (
     <View style={styles.container}>
-      <Text style={styles.timeText}>{time.hours}</Text>
+      <Text style={[styles.timeText, { fontSize }]}>{time.hours}</Text>
       <ProgressBar progress={time.seconds} />
-      <Text style={styles.timeText}>{time.minutes}</Text>
+      <Text style={[styles.timeText, { fontSize }]}>{time.minutes}</Text>
     </View>
   );
 };
@@ -34,7 +37,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   timeText: {
-    fontSize: 160,
     fontWeight: 'bold',
     color: 'white',
   },
